@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
 import React from "react"
-
+import styled, { StyledObject } from "styled-components"
 interface IInputRange {
   referance: React.MutableRefObject<HTMLInputElement | null>
   name: string
@@ -9,11 +8,48 @@ interface IInputRange {
   min: number
   max: number
   thumbColor?: string
-  thumbStyle?: React.CSSProperties
-  thumbFocusStyle?: React.CSSProperties
+  thumbStyle?: StyledObject
+  thumbFocusStyle?: StyledObject
   ariaValueText?: string
 }
 
+const styledInput = styled.input<IInputRange>`
+background: "${props => props.thumbColor}"
+pointerEvents: "none";
+appearance: "none";
+outline: "none";
+transformOrigin: "center";
+position: "absolute";
+padding: 0;
+margin: 0;
+left: 0;
+width: "100%";
+height: "100%";
+background: "transparent";
+display: "flex";
+justify-content: "center";
+align-items: "center";
+&::-webkit-slider-runnable-track {
+  width: "100%",
+  height: "100%",
+  background: "transparent",
+},
+"&::-webkit-slider-thumb": {
+  z-index: 4,
+  appearance: "none",
+  pointer-events: "all",
+  cursor: "pointer",
+  width: "12px",
+  height: "12px",
+  border-radius: "100%",
+  transition: "box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)",
+  ${props => props.thumbStyle}
+},
+"&:focus::-webkit-slider-thumb": {
+  boxShadow: "0px 0px 0px 4px rgba(25, 118, 210, 0.16)",
+  ${props => props.thumbFocusStyle},
+}
+`
 const InputRange = ({
   max,
   min,

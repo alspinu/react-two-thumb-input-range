@@ -1,27 +1,63 @@
-/** @jsxImportSource @emotion/react */
 import React from "react"
+import styled, { StyledObject } from "styled-components"
+const bubbleStyle: StyledObject = {
+  position: "absolute",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  color: "white",
+  backgroundColor: "#1976d2",
+  width: "48px",
+  height: "24px",
+  top: "-32px",
+  borderRadius: "2px",
+  transformOrigin: "bottom center",
+}
 
+const bubbleTextStyle: StyledObject = {
+  display: "inline-block",
+  fontSize: "0.75rem",
+  lineHeight: "1.2",
+  letterSpacing: "0.01071em",
+}
 interface IProps {
   value: [number, number]
   thumbPositions: {
     rangeValue1: number
     rangeValue2: number
   }
-  labelStyle?: React.CSSProperties
-  labelTextStyle?: React.CSSProperties
+  labelStyle?: StyledObject
+  labelTextStyle?: StyledObject
 }
+const outputInnerStyle = styled.div<IProps>`
+left: "calc(${props => props.thumbPositions.rangeValue1}% - 24px)";
+"&::after": {
+  content: '""';
+  display: "block";
+  borderWidth: "8px 8px 0";
+  marginLeft: "-8px";
+  borderStyle: "solid";
+  color: "currentColor";
+  borderColor: '${props => props.labelStyle?.backgroundColor || bubbleStyle.backgroundColor} transparent transparent';
+  position: "absolute";
+  bottom: "-8px";
+  left: "50%";
+  ${bubbleStyle};
+  ${props => props.labelStyle}
+},
 
+`;
 const InputLabel = ({ value, thumbPositions, labelStyle, labelTextStyle }: IProps) => {
   return (
     <div
-      css={{
+      style={{
         position: "relative",
         width: "98%",
         height: "15px",
       }}
     >
       <output
-        css={{
+        style={{
           left: `calc(${thumbPositions.rangeValue1}% - 24px)`,
           "&::after": {
             content: `""`,
@@ -39,10 +75,10 @@ const InputLabel = ({ value, thumbPositions, labelStyle, labelTextStyle }: IProp
           ...labelStyle,
         }}
       >
-        <small css={{ ...bubbleTextStyle, ...labelTextStyle }}>{value[0]}</small>
+        <small style={{ ...bubbleTextStyle, ...labelTextStyle }}>{value[0]}</small>
       </output>
       <output
-        css={{
+        style={{
           left: `calc(${thumbPositions.rangeValue2}% - 24px)`,
           "&::after": {
             content: `""`,
@@ -59,30 +95,11 @@ const InputLabel = ({ value, thumbPositions, labelStyle, labelTextStyle }: IProp
           ...labelStyle,
         }}
       >
-        <small css={{ ...bubbleTextStyle, ...labelTextStyle }}>{value[1]}</small>
+        <small style={{ ...bubbleTextStyle, ...labelTextStyle }}>{value[1]}</small>
       </output>
     </div>
   )
 }
 
-const bubbleStyle: React.CSSProperties = {
-  position: "absolute",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: "white",
-  backgroundColor: "#1976d2",
-  width: "48px",
-  height: "24px",
-  top: "-32px",
-  borderRadius: "2px",
-  transformOrigin: "bottom center",
-}
 
-const bubbleTextStyle: React.CSSProperties = {
-  display: "inline-block",
-  fontSize: "0.75rem",
-  lineHeight: "1.2",
-  letterSpacing: "0.01071em",
-}
 export default InputLabel
