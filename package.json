@@ -17,8 +17,8 @@
     "aria",
     "aria slider"
   ],
-  "author": "Alican Erdurmaz <alicanerdurmaz@gmail.com>",
-  "homepage": "https://github.com/alicanerdurmaz/react-two-thumb-input-range",
+  "author": "Alex Spinu <platypus.winterberry@gmail.com>",
+  "homepage": "https://github.com/alspinu/react-two-thumb-input-range",
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
